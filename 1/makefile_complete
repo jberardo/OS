@@ -1,0 +1,43 @@
+#
+# Default rule to execute when the make command has no arguments
+#
+all: helloworld
+
+#
+# preprocessor step (produces preprocessed c code files)
+#
+helloworld.i: helloworld.c helperfunctions.h
+	gcc -E helloworld.c -o helloworld.i -Wall -pedantic
+
+helperfunctions.i: helperfunctions.c
+	gcc -E helperfunctions.c -o helperfunctions.i -Wall -pedantic
+
+#
+# compiler step (produces assembly code files)
+#
+helloworld.s: helloworld.i
+	gcc -S helloworld.i -o helloworld.s -Wall -pedantic
+
+helperfunctions.s: helperfunctions.i
+	gcc -S helperfunctions.i -o helperfunctions.s -Wall -pedantic
+#
+# assembler setp (produces object files)
+#
+helloworld.o: helloworld.s
+	gcc -c helloworld.s -o helloworld.o -Wall -pedantic
+
+helperfunctions.o: helperfunctions.s
+	gcc -c helperfunctions.s helperfunctions.o -o helloworld -Wall -pedantic
+
+#
+# The command line 'make clean' executes the follwing command
+# (removes all files created during build)
+#
+clean:
+	rm -f helloworld helloworld.o helloworld.s helloworld.i
+	rm -f helperfunctions.o helperfunctions.s helperfunctions.i
+
+#
+# Lists the "phony" rules in this file ('all' and 'clean')
+#
+.PHONY: all clean
