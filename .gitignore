@@ -1,0 +1,10 @@
+# exclude everything except directory foo/bar
+*.pdf
+*.xlsx
+*.txt
+*.sh
+*.o
+*[Hh]ello[Ww]orld*
+*deliverables*
+*step-by*
+*.tar.gz
