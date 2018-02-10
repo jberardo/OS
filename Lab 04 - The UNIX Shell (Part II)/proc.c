@@ -22,12 +22,14 @@ int exec_cmd(int *argc, char *argv[])
     /* child process */
     if (pid == 0)
     {
-        char *path_executable = getExecutablePath(argv[0]);
+        //char *path_executable = getExecutablePath(argv[0]);
+        char *path_executable = "";
+        getExecutablePath(argv[0], path_executable);
 
         if (path_executable == NULL)
         {
-            fprintf(stderr,"no executable found");
-            return 1;
+            fprintf(stderr, "Command %s not found\n", argv[0]);
+            exit(1);
         }
 
         if (execve(path_executable, argv, NULL) < 0)
@@ -50,7 +52,7 @@ int exec_cmd(int *argc, char *argv[])
 
         if (status)
         {
-            fprintf(stderr, "Error code: %d\n", status);
+            return 1;
         }
     }
 

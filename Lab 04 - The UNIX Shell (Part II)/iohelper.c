@@ -43,18 +43,18 @@ void parse_arguments(char line[], int *argc, char *argv[])
 	argv[*argc] = NULL;
 }
 
-char* getExecutablePath(char *command)
+void getExecutablePath(char *command, char *full_path)
 {
 	const char *delimiter = ":";
 	char *path = getenv("PATH");
 	char *tok;
 
-	char *exec_path = malloc(MAX_PATH_LEN);
+	//char *exec_path = malloc(MAX_PATH_LEN);
 
-	if (!exec_path)
-	{
-		return NULL;
-	}
+	//if (!exec_path)
+	//{
+	//	return;
+	//}
 
 	tok = strtok(path, delimiter);
 
@@ -68,7 +68,7 @@ char* getExecutablePath(char *command)
 		if (total_len > MAX_PATH_LEN)
 		{
 			fprintf(stderr, "executable path length exceeded maximun");
-			return NULL;
+			return;
 		}
 
 		strcpy(temp, tok);
@@ -77,13 +77,10 @@ char* getExecutablePath(char *command)
 
 		if (access(temp, R_OK | X_OK) == 0)
 		{
-			strcpy(exec_path, temp);
-			return exec_path;
+			strcpy(full_path, temp);
+			return;
 		}
 
 		tok = strtok(NULL, delimiter);
 	}
-
-	/* no executable found */
-	return NULL;
 }
