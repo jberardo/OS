@@ -1,26 +1,43 @@
-// C functions to look at the man page:
-// 		- getenv
-//		- access
-//		- fork
-//		- execve
-//		- wait
-//		- fprintf (other than stdout)
-//		- gets
+/*
+C functions to look at the man page:
+Lab 3:
+    - getenv
+    - access
+    - fork
+    - execve
+    - wait
+    - fprintf (other than stdout)
+    - gets
 
-// Steps:
-// 		- print prompt to stdout
-//		- read command from stdin (block until <enter>)
-//		- parse into argv
-//		- if "exit || quit" break loop and terminate
-//		- if not: search for executable file
-//		- create child: fork
-//		- wait child terminate
-//		- child: execve
-//		- when child terminates, parent get control back and starts over
+Lab 4:
+    - pipe
+    - read
+    - write
+    - open
+    - close
+    - dup
 
-/*****************/
-/*   includes    */
-/*****************/
+Steps (lab3):
+    - print prompt to stdout
+    - read command from stdin (block until <enter>)
+    - parse into argv
+    - if "exit || quit" break loop and terminate
+    - if not: search for executable file
+    - create child: fork
+    - wait child terminate
+    - child: execve
+    - when child terminates, parent get control back and starts over
+
+Steps (lab4):
+    - print prompt to stdout
+*/
+
+#ifndef COMMON_H
+#define COMMON_H
+
+/*
+* includes
+*/
 #include <stdio.h>
 #include <string.h>
 #include <strings.h>
@@ -30,6 +47,7 @@
 #include <ctype.h>
 #include <sys/signal.h>
 #include <sys/wait.h>
+#include <fcntl.h> /* for O_WRONLY and O_CREAT */
 
 /*****************/
 /*   defines     */
@@ -45,8 +63,10 @@
 /*****************/
 /*   global var  */
 /*****************/
-
+extern char full_path[];
 
 /*****************/
 /*   prototypes  */
 /*****************/
+
+#endif
